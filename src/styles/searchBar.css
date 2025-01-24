@@ -1,0 +1,39 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.search-bar button {
+  padding: 0.5rem 1rem;
+  background: #ff4400;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  margin-left: -1px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background: #e63d00;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .search-bar {
+    width: 100%;
+    order: -1;
+  }
+  
+  .search-input {
+    height: 40px; /* Ligeramente más grande en móvil para mejor usabilidad */
+  }
+} 
