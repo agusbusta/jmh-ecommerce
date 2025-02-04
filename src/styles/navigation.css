@@ -1,0 +1,155 @@
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+
+/* Estilos para el submenú */
+.has-submenu {
+  position: relative;
+}
+
+.submenu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  min-width: 220px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.submenu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.submenu li {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.submenu li:last-child {
+  border-bottom: none;
+}
+
+.submenu a {
+  padding: 0.75rem 1rem;
+  display: block;
+  white-space: nowrap;
+}
+
+.submenu a:hover {
+  background: var(--gray-light);
+}
+
+.rotate {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .navigation {
+    width: 100%;
+  }
+
+  .menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    padding: 0;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background: white;
+    transition: left 0.3s ease;
+    z-index: 1001;
+  }
+
+  .nav-menu.active {
+    left: 0;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    padding: 60px 0 0;
+  }
+
+  .nav-links li {
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .nav-links a,
+  .submenu-trigger {
+    display: block;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .submenu {
+    position: static;
+    width: 100%;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .submenu.active {
+    max-height: 400px;
+  }
+
+  .submenu a {
+    padding-left: 2rem;
+    background: var(--gray-light);
+  }
+} 

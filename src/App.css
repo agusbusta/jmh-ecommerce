@@ -11,18 +11,26 @@
   flex-direction: column;
 }
 
+/* Estilo para el contenedor principal */
 main {
+  margin-top: 120px; /* Altura del header completo */
   flex: 1;
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
+}
+
+/* Excepción para la página de inicio */
+.home-page {
+  margin-top: 0;
 }
 
 /* Header Styles */
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
 }
 
 .header-top {
@@ -181,6 +189,14 @@ main {
 }
 
 @media (max-width: 768px) {
+  main {
+    margin-top: 140px; /* Altura del header en móvil */
+  }
+  
+  .home-page {
+    margin-top: 0;
+  }
+
   .header-top {
     flex-direction: column;
     text-align: center;
@@ -438,24 +454,6 @@ main {
   height: 35px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .contact-content {
-    grid-template-columns: 1fr;
-  }
-
-  .nav-links {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .header-top {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
-  }
-}
-
 /* Product Detail Styles */
 .product-detail {
   display: grid;
@@ -524,6 +522,7 @@ main {
 /* Home Page Styles */
 .home section {
   margin: 4rem 0;
+  margin-top: 12%;
 }
 
 .home h2 {

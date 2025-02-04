@@ -1,18 +1,47 @@
 import { createSlice } from '@reduxjs/toolkit';
+import termometroImage from '../assets/images/termometro.jpg';
+
+const initialState = {
+  items: [
+    {
+      id: 1,
+      name: "Termómetro bimetálico",
+      price: 27721.00,
+      image: termometroImage,
+      stock: 25,
+      description: "Termómetro bimetálico marca CENI - Construido totalmente en acero inoxidable"
+    },
+    // Duplicamos el producto para tener más items
+    {
+      id: 2,
+      name: "Termómetro bimetálico",
+      price: 27721.00,
+      image: termometroImage,
+      stock: 25,
+      description: "Termómetro bimetálico marca CENI - Construido totalmente en acero inoxidable"
+    },
+    {
+      id: 3,
+      name: "Termómetro bimetálico",
+      price: 27721.00,
+      image: termometroImage,
+      stock: 25,
+      description: "Termómetro bimetálico marca CENI - Construido totalmente en acero inoxidable"
+    }
+  ],
+  loading: false,
+  error: null
+};
 
 const productsSlice = createSlice({
   name: 'products',
-  initialState: {
-    items: [],
-    loading: false,
-    error: null
-  },
+  initialState,
   reducers: {
-    setProducts: (state, action) => {
-      state.items = action.payload;
-    },
     setLoading: (state, action) => {
       state.loading = action.payload;
+    },
+    setProducts: (state, action) => {
+      state.items = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
@@ -20,7 +49,7 @@ const productsSlice = createSlice({
   }
 });
 
-export const { setProducts, setLoading, setError } = productsSlice.actions;
+export const { setLoading, setProducts, setError } = productsSlice.actions;
 export default productsSlice.reducer;
 
 // Thunks

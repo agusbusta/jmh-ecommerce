@@ -1,40 +1,72 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../store/cartSlice';
+import termometroImage from '../assets/images/termometro.jpg';
+import '../styles/productDetail.css';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { addToCart } = useCart();
-
-  useEffect(() => {
-    // Aquí iría la llamada a la API para obtener el detalle del producto
-    setProduct({
-      id: 1,
-      name: "Termómetro bimetálico",
-      price: 27721.00,
-      image: "/product1.jpg",
-      stock: 25,
-      description: "Termómetro bimetálico marca CENI - Construido totalmente en acero inoxidable",
-      specifications: [
-        "Caja: Ø63 mm",
-        "Salida Posterior",
-        "Rosca: 1/4'NPT",
-        "Largo vaina: 85 mm UTIL",
-        "Rango: 0-100°C"
-      ]
-    });
-    setLoading(false);
-  }, [id]);
+  const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    console.log('Agregando desde detalle:', product);
-    addToCart(product);
+    if (product) {
+      dispatch(addToCart(product));
+    }
   };
 
-  if (loading) return <div>Cargando...</div>;
-  if (!product) return <div>Producto no encontrado</div>;
+  useEffect(() => {
+    const loadProduct = async () => {
+      try {
+        setProduct({
+          id: parseInt(id),
+          name: "Termómetro bimetálico",
+          price: 27721.00,
+          image: termometroImage,
+          stock: 25,
+          description: "Termómetro bimetálico marca CENI - Construido totalmente en acero inoxidable",
+          specifications: [
+            "Caja: Ø63 mm",
+            "Salida Posterior",
+            "Rosca: 1/4'NPT",
+            "Largo vaina: 85 mm UTIL",
+            "Rango: 0-100°C"
+          ],
+          technicalDescription: {
+            title: "Descripción Técnica",
+            content: `Los termómetros bimetálicos CENI están diseñados para ofrecer mediciones precisas y confiables de temperatura en diversas aplicaciones industriales. 
+
+            Características principales:
+            - Sistema de medición bimetálico de respuesta rápida
+            - Construcción robusta en acero inoxidable AISI 304
+            - Precisión según DIN EN 13190 clase 1
+            - Protección IP65 contra polvo y agua
+            - Ajuste del cero externo
+            
+            Aplicaciones recomendadas:
+            - Industria química y petroquímica
+            - Procesos industriales
+            - Sistemas de calefacción
+            - Industria alimenticia
+            - Aplicaciones marinas
+            
+            El diseño robusto y la construcción en acero inoxidable garantizan una larga vida útil incluso en condiciones adversas. La conexión posterior permite una instalación versátil en diferentes configuraciones.`
+          }
+        });
+      } catch (error) {
+        console.error('Error al cargar el producto:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProduct();
+  }, [id]);
+
+  if (loading) return <div className="loading">Cargando...</div>;
+  if (!product) return <div className="error">Producto no encontrado</div>;
 
   return (
     <div className="product-detail">
@@ -59,6 +91,14 @@ const ProductDetail = () => {
         >
           Añadir al carrito
         </button>
+      </div>
+      <div className="technical-description">
+        <h2>{product.technicalDescription.title}</h2>
+        <div className="technical-content">
+          {product.technicalDescription.content.split('\n').map((paragraph, index) => (
+            <p key={index}>{paragraph.trim()}</p>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,16 +1,11 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { FaUser, FaShoppingCart } from 'react-icons/fa';
 import Navigation from './Navigation';
 import SearchBar from '../common/SearchBar';
-import { FaUser, FaShoppingCart } from 'react-icons/fa';
 import logo from '../../assets/images/logo.jpg';
 import '../../styles/header.css';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const cartItems = useSelector(state => state.cart.items);
-
   return (
     <header className="header">
       <div className="header-top">
@@ -29,14 +24,13 @@ const Header = () => {
           </Link>
           <Link to="/carrito" className="cart-widget">
             <FaShoppingCart />
-            <span className="cart-count">{cartItems.length}</span>
+            <span className="cart-count">0</span>
           </Link>
         </div>
       </div>
-      
-      <div className="nav-container">
-        <div className="header-nav">
-          <Navigation isOpen={isMenuOpen} setIsOpen={setIsMenuOpen} />
+      <div className="header-bottom">
+        <div className="container">
+          <Navigation />
           <SearchBar />
         </div>
       </div>

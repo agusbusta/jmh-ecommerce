@@ -1,35 +1,67 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaChevronDown } from 'react-icons/fa';
+import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
+import '../../styles/navigation.css';
 
-const Navigation = ({ isOpen, setIsOpen }) => {
-  const [activeSubmenu, setActiveSubmenu] = useState(null);
+const Navigation = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
 
-  const handleSubmenuToggle = (index) => {
-    setActiveSubmenu(activeSubmenu === index ? null : index);
+  const productCategories = [
+    { name: 'Manómetros', path: '/productos/manometros' },
+    { name: 'Transmisores', path: '/productos/transmisores' },
+    { name: 'Sellos separadores', path: '/productos/sellos-separadores' },
+    { name: 'Válvulas y Manifolds', path: '/productos/valvulas-y-manifolds' }
+  ];
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleSubmenu = (e) => {
+    e.preventDefault();
+    setIsSubmenuOpen(!isSubmenuOpen);
   };
 
   return (
-    <nav className={`main-nav ${isOpen ? 'open' : ''}`}>
-      <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li className="has-submenu">
-          <button 
-            className="submenu-trigger"
-            onClick={() => handleSubmenuToggle(0)}
-          >
-            Productos <FaChevronDown className={activeSubmenu === 0 ? 'rotate' : ''} />
-          </button>
-          <ul className={`submenu ${activeSubmenu === 0 ? 'active' : ''}`}>
-            <li><Link to="/productos/manometros">Manómetros</Link></li>
-            <li><Link to="/productos/transmisores">Transmisores</Link></li>
-            <li><Link to="/productos/sellos-separadores">Sellos Separadores</Link></li>
-            <li><Link to="/productos/valvulas">Válvulas y Manifolds</Link></li>
-          </ul>
-        </li>
-        <li><Link to="/nosotros">Nosotros</Link></li>
-        <li><Link to="/contacto">Contacto</Link></li>
-      </ul>
+    <nav className="navigation">
+      <button className="menu-toggle" onClick={toggleMenu}>
+        {isMenuOpen ? <FaTimes /> : <FaBars />}
+      </button>
+
+      <div className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
+        <ul className="nav-links">
+          <li>
+            <Link to="/" onClick={() => setIsMenuOpen(false)}>Inicio</Link>
+          </li>
+          <li className="has-submenu">
+            <a href="#" onClick={toggleSubmenu} className="submenu-trigger">
+              Productos <FaChevronDown className={isSubmenuOpen ? 'rotate' : ''} />
+            </a>
+            <ul className={`submenu ${isSubmenuOpen ? 'active' : ''}`}>
+              {productCategories.map((category) => (
+                <li key={category.path}>
+                  <Link 
+                    to={category.path}
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setIsSubmenuOpen(false);
+                    }}
+                  >
+                    {category.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </li>
+          <li>
+            <Link to="/nosotros" onClick={() => setIsMenuOpen(false)}>Nosotros</Link>
+          </li>
+          <li>
+            <Link to="/contacto" onClick={() => setIsMenuOpen(false)}>Contacto</Link>
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 };

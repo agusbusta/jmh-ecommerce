@@ -1,0 +1,16 @@
+.page-container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+  min-height: calc(100vh - 180px); /* Ajustado para considerar header y footer */
+  margin-top: 20px; /* Añadimos un margen adicional */
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: var(--spacing-md);
+    min-height: calc(100vh - 200px);
+    margin-top: 15px;
+  }
+} 

@@ -1,9 +1,11 @@
+import termometroImage from '../assets/images/termometro.jpg';
+
 export const products = [
   {
     id: 1,
     name: "Termómetro bimetálico",
     price: 27721.00,
-    image: "/product1.jpg",
+    image: termometroImage,
     stock: 25,
     description: "Termómetro bimetálico marca CENI - Construido totalmente en acero inoxidable"
   },

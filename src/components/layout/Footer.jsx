@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom';
+import facebookIcon from '../../assets/images/facebook.png';
+import instaIcon from '../../assets/images/insta.png';
+import './Footer.css';
 
 const Footer = () => {
   return (
@@ -7,30 +10,31 @@ const Footer = () => {
         <div className="footer-section">
           <h3>Empresa</h3>
           <ul>
-            <li><Link to="/inicio">Inicio</Link></li>
-            <li><Link to="/nuestra-empresa">Nuestra empresa</Link></li>
-            <li><Link to="/instalaciones">Instalaciones</Link></li>
-            <li><Link to="/preguntas-frecuentes">Preguntas Frecuentes</Link></li>
+            <li><Link to="/">Inicio</Link></li>
+            <li><Link to="/nosotros">Nuestra empresa</Link></li>
+            <li><Link to="/contacto">Contacto</Link></li>
           </ul>
         </div>
 
         <div className="footer-section">
           <h3>Productos</h3>
           <ul>
-            <li><Link to="/manometros">Manómetros</Link></li>
-            <li><Link to="/transmisores">Transmisores</Link></li>
-            <li><Link to="/sellos-separadores">Sellos separadores</Link></li>
-            <li><Link to="/valvulas">Válvulas y Manifolds</Link></li>
+            <li><Link to="/productos/manometros">Manómetros</Link></li>
+            <li><Link to="/productos/transmisores">Transmisores</Link></li>
+            <li><Link to="/productos/sellos-separadores">Sellos separadores</Link></li>
+            <li><Link to="/productos/valvulas-y-manifolds">Válvulas y Manifolds</Link></li>
           </ul>
         </div>
 
         <div className="footer-section">
           <h3>Síguenos</h3>
           <div className="social-links">
-            <a href="https://facebook.com/jmh" target="_blank" rel="noopener noreferrer">Facebook</a>
-            <a href="https://twitter.com/jmh" target="_blank" rel="noopener noreferrer">Twitter</a>
-            <a href="https://linkedin.com/company/jmh" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="https://instagram.com/jmh" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+              <img src={facebookIcon} alt="Facebook" className="social-icon" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+              <img src={instaIcon} alt="Instagram" className="social-icon" />
+            </a>
           </div>
         </div>
 

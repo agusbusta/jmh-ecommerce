@@ -1,53 +1,20 @@
-import { useState, useEffect } from 'react';
-import ProductCard from '../components/products/ProductCard';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { products as allProducts } from '../data/products';
-
-// Función para normalizar texto (eliminar acentos y convertir a minúsculas)
-const normalizeText = (text) => {
-  return text
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Elimina acentos
-    .replace(/[^a-z0-9\s]/g, ''); // Solo deja letras, números y espacios
-};
+import ProductCard from '../components/products/ProductCard';
+import '../styles/products.css';
 
 const Products = () => {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const products = useSelector(state => state.products.items);
   const [searchParams] = useSearchParams();
   const searchTerm = searchParams.get('search') || '';
 
-  useEffect(() => {
-    // Simulamos una carga asíncrona
-    const loadProducts = async () => {
-      setProducts(allProducts);
-      setLoading(false);
-    };
-
-    loadProducts();
-  }, []);
-
-  useEffect(() => {
-    if (searchTerm) {
-      const normalizedSearch = normalizeText(searchTerm);
-      const filtered = products.filter(product => {
-        const normalizedName = normalizeText(product.name);
-        const normalizedDescription = product.description ? normalizeText(product.description) : '';
-        
-        return (
-          normalizedName.includes(normalizedSearch) || 
-          normalizedDescription.includes(normalizedSearch)
-        );
-      });
-      setFilteredProducts(filtered);
-    } else {
-      setFilteredProducts(products);
-    }
-  }, [searchTerm, products]);
-
-  if (loading) return <div>Cargando...</div>;
+  const filteredProducts = searchTerm
+    ? products.filter(product => 
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : products;
 
   return (
     <div className="products-page">
