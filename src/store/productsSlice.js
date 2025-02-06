@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import termometroImage from '../assets/images/termometro.jpg';
+import { API_ROUTES, fetchApi } from '../config/api';
 
 const initialState = {
   items: [
@@ -40,29 +41,91 @@ const productsSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
-    setProducts: (state, action) => {
-      state.items = action.payload;
-    },
     setError: (state, action) => {
       state.error = action.payload;
+      state.loading = false;
+    },
+    setProducts: (state, action) => {
+      state.items = action.payload;
+      state.loading = false;
+    },
+    addProduct: (state, action) => {
+      state.items.push(action.payload);
+    },
+    updateProduct: (state, action) => {
+      const index = state.items.findIndex(item => item.id === action.payload.id);
+      if (index !== -1) {
+        state.items[index] = action.payload;
+      }
+    },
+    deleteProduct: (state, action) => {
+      state.items = state.items.filter(item => item.id !== action.payload);
     }
   }
 });
 
-export const { setLoading, setProducts, setError } = productsSlice.actions;
-export default productsSlice.reducer;
-
-// Thunks
+// Thunks para operaciones asíncronas
 export const fetchProducts = () => async (dispatch) => {
+  dispatch(setLoading(true));
   try {
-    dispatch(setLoading(true));
-    // Aquí iría la llamada a tu API
-    const response = await fetch('/api/products');
-    const data = await response.json();
+    const data = await fetchApi(API_ROUTES.PRODUCTS);
     dispatch(setProducts(data));
   } catch (error) {
     dispatch(setError(error.message));
-  } finally {
-    dispatch(setLoading(false));
   }
-}; 
+};
+
+export const createProduct = (productData) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const data = await fetchApi(API_ROUTES.PRODUCTS, {
+      method: 'POST',
+      body: JSON.stringify(productData)
+    });
+    dispatch(addProduct(data));
+    return { success: true, product: data };
+  } catch (error) {
+    dispatch(setError(error.message));
+    return { success: false, error: error.message };
+  }
+};
+
+export const updateProductById = (id, productData) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const data = await fetchApi(API_ROUTES.PRODUCT_BY_ID(id), {
+      method: 'PUT',
+      body: JSON.stringify(productData)
+    });
+    dispatch(updateProduct(data));
+    return { success: true, product: data };
+  } catch (error) {
+    dispatch(setError(error.message));
+    return { success: false, error: error.message };
+  }
+};
+
+export const deleteProductById = (id) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    await fetchApi(API_ROUTES.PRODUCT_BY_ID(id), {
+      method: 'DELETE'
+    });
+    dispatch(deleteProduct(id));
+    return { success: true };
+  } catch (error) {
+    dispatch(setError(error.message));
+    return { success: false, error: error.message };
+  }
+};
+
+export const { 
+  setLoading, 
+  setError, 
+  setProducts, 
+  addProduct, 
+  updateProduct, 
+  deleteProduct 
+} = productsSlice.actions;
+
+export default productsSlice.reducer; 

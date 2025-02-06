@@ -1,11 +1,20 @@
 import { Link } from 'react-router-dom';
 import { FaUser, FaShoppingCart } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../store/authSlice';
 import Navigation from './Navigation';
 import SearchBar from '../common/SearchBar';
 import logo from '../../assets/images/logo.jpg';
 import '../../styles/header.css';
 
 const Header = () => {
+  const { user, isAuthenticated } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <header className="header">
       <div className="header-top">
@@ -15,10 +24,22 @@ const Header = () => {
           </Link>
         </div>
         <div className="header-actions">
-          <Link to="/identificarse" className="auth-link">
-            <FaUser />
-            <span>Identificarse</span>
-          </Link>
+          {isAuthenticated ? (
+            <div className="auth-links">
+              <Link to="/mi-cuenta" className="auth-link">
+                <FaUser />
+                <span>{user.name}</span>
+              </Link>
+              <button onClick={handleLogout} className="logout-button">
+                Cerrar sesión
+              </button>
+            </div>
+          ) : (
+            <Link to="/identificarse" className="auth-link">
+              <FaUser />
+              <span>Identificarse</span>
+            </Link>
+          )}
           <Link to="/contacto" className="contact-link">
             Contáctenos
           </Link>

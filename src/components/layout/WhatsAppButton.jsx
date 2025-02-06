@@ -6,8 +6,9 @@ const WhatsAppButton = () => {
   };
 
   return (
-      <img src={process.env.PUBLIC_URL + '/images/whatsapp.png'} alt="WhatsApp" onClick={handleWhatsAppClick}  className="whatsapp-button" />
-
+    <button className="whatsapp-button" onClick={handleWhatsAppClick} aria-label="Contactar por WhatsApp">
+      <img src="/images/whatsapp.png" alt="WhatsApp" />
+    </button>
   );
 };
 
