@@ -62,11 +62,6 @@ const Login = ({ onSwitchToRegister, onClose }) => {
         ¿No tienes cuenta?{' '}
         <button onClick={onSwitchToRegister}>Regístrate aquí</button>
       </p>
-      <div className="demo-credentials">
-        <p>Credenciales de administrador:</p>
-        <p>Email: damianadmin@jmh.com</p>
-        <p>Contraseña: DamianAdmin123</p>
-      </div>
     </div>
   );
 };
